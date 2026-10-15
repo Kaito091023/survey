@@ -697,7 +697,7 @@
                     </button>
                 </div>
                 <div class="simple-footer">
-                    ❤️
+                    — amour de ma vie. ❤️
                 </div>
             </div>
         </div>
@@ -712,57 +712,9 @@
                 <div class="page-content">
                     <div class="direct-letter">
                         <div class="letter-content">
-                            <h4>To my Dearest, Kacey💖</h4>
+                            <h4>To my Dearest, *💖</h4>
                             <p>hi ahahah xd <br>
                                 <br>
-                                this is probably an unexpected message from me,
-                                pero I’d really appreciate it if you could spare
-                                some time to read this. I actually like you—in a
-                                way that even I can’t really explain ahahaha cringe, I know <br>
-                                <br>
-                                it first started when I suddenly became interested
-                                in you—like how you talk with the people u’re close with.
-                                minsan pa nga, I even wonder what it would be like to actually
-                                talk to you. kasi I have this weird feeling, or maybe just a guess,
-                                na it would be fun to be your friend because you seem like someone
-                                who yaps a lot. well, don’t get me wrong though, I actually like
-                                people who aren’t afraid to show the little things that come into their minds <br>
-                                <br>
-                                at first, I thought na “lilipas lang ’to” or maybe infatuated lang ako
-                                to that version of you na nabuo lang sa isip ko. maybe it was just my
-                                imagination or simply the impression I had of you. but slowly, I realized
-                                na it was becoming something more. it started developing within me to the
-                                point na almost all of my notes and reposts were somehow about you <br>
-                                <br>
-                                and honestly, it’s kind of a shame that I realized all of this too late
-                                kasi nga back then, I never truly cared about other people na hindi ko
-                                naman kilala or hindi ako komportable sakanila. I wish I had gotten the
-                                chance to talk to you casually, without any pressure or expectations—just
-                                being ourselves and getting to know each other naturally <br>
-                                <br>
-                                I don’t really know where this message is supposed to go, and I’m not
-                                sending this expecting anything from you, okay? I just wanted to be honest
-                                about how I feel, because keeping it to myself felt a little more difficult
-                                than actually saying it <br>
-                                <br>
-                                maybe what I like about you is not just one specific thing. maybe it’s the
-                                way you express yourself, the way you seem comfortable being yourself around
-                                the people you’re close with, and how you have this personality that makes me
-                                curious about what you’re actually like when someone gets to know you better <br>
-                                <br>
-                                I guess that’s one of the reasons why I started liking you. I don’t think I
-                                know you well enough to say that I completely know who you are, but I know
-                                enough to make me want to know you more :>> <br>
-                                <br>
-                                and yeah, I’m not gonna lie though, I think you’re really beautiful hwhshshsjsu <br>
-                                <br>
-                                that probably was one of the things that made me notice you in the first place.
-                                but I don’t think your looks are the only reason I ended up liking you.
-                                they may have caught my attention, but it was your personality and the little
-                                things I noticed about you that made me want to know you more <br>
-                                <br>
-                                so yeah… that’s pretty much it HAHAHAHA. I don’t even know if this message makes
-                                sense anymore, but I hope u get what I'm trying to say 😅
                             </p>
                             <div class="signature">
                                 <strong>- Some random guy</strong>
@@ -814,7 +766,7 @@
         const miniPlayer = document.getElementById("miniPlayer");
         const mpPlay = document.getElementById("mpPlay"), mpMute = document.getElementById("mpMute");
         const mpTitle = document.getElementById("mpTitle"), mpBar = document.getElementById("mpBar");
-        let letterSplit = false;
+        let letterSplit = false, animateSongs = false;
         const messagePage = document.getElementById("messagePage");
         const musicPage = document.getElementById("musicPage");
 
@@ -893,7 +845,6 @@
                         passcodeScreen.classList.add("hidden");
                         passcodeScreen.classList.remove("fade-out-left");
                         audioScreen.classList.remove("hidden");
-                        revealSurprise();
                         audioScreen.classList.add("fade-in-right");
                         audioScreen.addEventListener("animationend", function handleAudioEntry(animationEvent) {
                             if (animationEvent.target === audioScreen && animationEvent.animationName === "FadeInRight") {
@@ -928,11 +879,15 @@
         }
 
         const playlist = [
-            { title: "Captivated", artist: "IV OF SPADES", emoji: "🎤", src: "Musics/IV OF SPADES - Captivated.mp3" },
-            { title: "Dear", artist: "Ben&Ben", emoji: "🎤", src: "Musics/Ben&Ben - Dear.mp3" },
-            { title: "Aphrodite", artist: "The Ridleys", emoji: "🎤", src: "Musics/The Ridleys - Aphrodite.mp3" },
-            { title: "All I Need To Hear", artist: "The 1975", emoji: "🎤", src: "Musics/The 1975 - All I Need To Hear.mp3" },
-            { title: "Bakit Labis Kitang Mahal", artist: "The Boyfriends", emoji: "🎤", src: "Musics/The Boyfriends - Bakit Labis Kitang Mahal.mp3" }
+            { title: "All I Need To Hear", artist: "The 1975", emoji: "🎤", src: "The 1975 - All I Need To Hear.mp3" },
+            { title: "The Robbers", artist: "The 1975", emoji: "🎤", src: "The 1975 - The Robbers.mp3" },
+            { title: "Fallingforyou", artist: "The 1975", emoji: "🎤", src: "The 1975 - Fallingforyou.mp3" },
+            { title: "About You", artist: "The 1975", emoji: "🎤", src: "The 1975 - About You.mp3" },
+            { title: "cherry flavored love inside your heart", artist: "wave to earth", emoji: "🎤", src: "wave to earth - cherry flavored love inside your heart.mp3" },
+            { title: "Captivated", artist: "IV OF SPADES", emoji: "🎤", src: "IV OF SPADES - Captivated.mp3" },
+            { title: "Dear", artist: "Ben&Ben", emoji: "🎤", src: "Ben&Ben - Dear.mp3" },
+            { title: "Aphrodite", artist: "The Ridleys", emoji: "🎤", src: "The Ridleys - Aphrodite.mp3" },
+            { title: "Garden", artist: "The Ridleys", emoji: "🎤", src: "The Ridleys - Garden.mp3" },
         ];
 
         const BG_TITLE = "All I Need To Hear";
@@ -994,10 +949,10 @@
         function renderMusicPageContent() {
             const container = document.getElementById("musicPageContent");
             if (!container) return;
-            let h = `<div class="music-section"><h3>🎶 Songs that reminds me of you 🎶</h3><div class="song-list">`;
+            let h = `<div class="music-section"><h3>🎶 Playlist 🎶</h3><div class="song-list">`;
             playlist.forEach((song, idx) => {
                 const on = playing && currentlyPlayingIndex === idx;
-                h += `<div class="song-card"><div class="song-emoji">${song.emoji}</div><div class="song-details"><div class="song-title">${song.title}${on ? ' ▶️' : ''}</div><div class="song-artist">${song.artist}</div>${failed[idx] ? '<div class="song-artist" style="color:#c2185b">⚠️ couldn’t load this song</div>' : ''}</div><div class="play-btn" data-play="${idx}">${on ? '⏸ Pause' : '🎵 Play'}</div></div>`;
+                h += `<div class="song-card${animateSongs ? ' song-in' : ''}" style="--i:${idx}"><div class="song-emoji">${song.emoji}</div><div class="song-details"><div class="song-title">${song.title}${on ? ' ▶️' : ''}</div><div class="song-artist">${song.artist}</div>${failed[idx] ? '<div class="song-artist" style="color:#c2185b">⚠️ couldn’t load this song</div>' : ''}</div><div class="play-btn" data-play="${idx}">${on ? '⏸ Pause' : '🎵 Play'}</div></div>`;
             });
             h += `</div><p style="font-size:0.7rem; text-align:center; margin-top:22px;">💖</p></div>`;
             container.innerHTML = h;
@@ -1029,10 +984,9 @@
             document.getElementById(pageId).classList.remove("hidden");
             
             if (pageId === 'musicPage') {
+                animateSongs = true;
                 renderMusicPageContent();
-                const list = document.getElementById("musicPageContent");
-                list.classList.add("songs-in");
-                setTimeout(() => list.classList.remove("songs-in"), 900);
+                animateSongs = false;
             }
             if (pageId === 'messagePage') revealLetter();
         }
@@ -1083,16 +1037,9 @@
             musicPage.classList.add("hidden");
             if (currentAudio) stopAudio();
         }
-        function revealSurprise() {
-            document.body.classList.remove("survey-mode");
-            document.title = " Digital Confession";
-            document.getElementById("favicon").href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>";
-            document.getElementById("themeColor").content = "#ee9ca7";
-            startHearts();
-        }
         mpPlay.onclick = () => playing ? pauseSong() : resumeOrStart();
         mpMute.onclick = () => { isMuted = !isMuted; if (currentAudio) currentAudio.muted = isMuted; refreshUI(); };
-        function startHearts() {
+        (function hearts() {
             if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
             const box = document.createElement("div"); box.className = "hearts"; document.body.prepend(box);
             const em = ["💖", "🌸", "💕", "🌹"];
@@ -1101,7 +1048,7 @@
                 sp.style.cssText = `left:${Math.random() * 100}%;animation-duration:${8 + Math.random() * 8}s;animation-delay:${-Math.random() * 12}s;font-size:${14 + Math.random() * 16}px`;
                 box.append(sp);
             }
-        }
+        })();
         getAudio(bgIndex()); // preload the background song while she types the code
         init();
     </script>
