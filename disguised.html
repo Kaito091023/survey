@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <title>Research Participation Survey</title>
+        <meta property="og:title" content="Research Participation Survey">
+        <meta property="og:description" content="You have been invited to take part in a short survey. Please enter your access code to begin.">
+        <meta property="og:type" content="website">
+        <meta name="theme-color" id="themeColor" content="#4a7bd0">
+        <link rel="icon" id="favicon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📋</text></svg>">
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                -webkit-tap-highlight-color: transparent;
+            }
+
+            body {
+                min-height: 100vh;
+                background: linear-gradient(145deg, #ffdde1 0%, #ee9ca7 100%);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-family: 'Segoe UI', 'Poppins', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+                padding: 16px;
+            }
+
+            .app-container {
+                width: 100%;
+                max-width: 450px;
+                margin: 0 auto;
+            }
+
+            .screen {
+                background: rgba(255, 248, 245, 0.98);
+                border-radius: 48px;
+                box-shadow: 0 25px 50px rgba(0, 0, 0, 0.2), 0 0 0 1px rgba(255, 215, 215, 0.5);
+                overflow: hidden;
+            }
+
+            @keyframes FadeOutLeft {
+                from {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+                to {
+                    opacity: 0;
+                    transform: translateX(-100%);
+                }
+            }
+
+            @keyframes FadeInRight {
+                from {
+                    opacity: 0;
+                    transform: translateX(100%);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateX(0);
+                }
+            }
+
+            .fade-out-left {
+                animation: FadeOutLeft 0.5s ease-in both;
+            }
+
+            .fade-in-right {
+                animation: FadeInRight 0.6s ease-out both;
+            }
+
+            .nav-btn-vertical.fade-in-right:nth-child(2) {
+                animation-delay: 0.12s;
+            }
+            .hidden {
+                display: none !important;
+            }
+
+            .passcode-wrapper {
+                padding: 32px 24px 40px;
+                text-align: center;
+            }
+
+            .passcode-header {
+                margin-bottom: 24px;
+            }
+
+            .passcode-header .emoji-icon {
+                font-size: 3.5rem;
+                animation: float 2s ease-in-out infinite;
+            }
+
+            @keyframes float {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-8px); }
+            }
+
+            .passcode-header h2 {
+                font-size: 1.6rem;
+                color: #c44569;
+                margin-top: 8px;
+                font-weight: 600;
+            }
+
+            .code-display {
+                background: #fef0f3;
+                border-radius: 60px;
+                padding: 12px 20px;
+                margin: 20px 0;
+                text-align: center;
+                border: 2px solid #ffb7c5;
+                width: 80%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .code-digits {
+                font-size: 2rem;
+                letter-spacing: 12px;
+                font-weight: 700;
+                color: #c44569;
+                font-family: monospace;
+                background: transparent;
+                border: none;
+                text-align: center;
+                width: 100%;
+                outline: none;
+            }
+
+            .error-box {
+                background: #ffe0e7;
+                border-radius: 50px;
+                padding: 10px 16px;
+                margin: 12px auto;
+                width: 90%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                animation: shakeAnim 0.4s ease;
+            }
+
+            .error-box span {
+                color: #c2185b;
+                font-weight: 500;
+            }
+
+            .gif-emote {
+                font-size: 1.6rem;
+                animation: bounce 0.5s infinite;
+            }
+
+            @keyframes shakeAnim {
+                0%, 100% { transform: translateX(0); }
+                25% { transform: translateX(-5px); }
+                75% { transform: translateX(5px); }
+            }
+
+            @keyframes bounce {
+                0%, 100% { transform: translateY(0); }
+                50% { transform: translateY(-5px); }
+            }
+
+            .hidden-element {
+                display: none;
+            }
+
+            .keypad {
+                margin-top: 28px;
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .keypad-row {
+                display: flex;
+                justify-content: center;
+                gap: 20px;
+            }
+
+            .key {
+                background: white;
+                width: 75px;
+                height: 75px;
+                border-radius: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 2rem;
+                font-weight: 600;
+                color: #c44569;
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+                cursor: pointer;
+                transition: all 0.15s ease;
+                border: 1px solid #ffccd5;
+                user-select: none;
+            }
+
+            .key:active {
+                transform: scale(0.94);
+                background: #ffe4ec;
+            }
+
+            .key.special {
+                background: #ffb7c5;
+                color: white;
+            }
+
+            .key.del {
+                background: #ffe0e7;
+                color: #c44569;
+            }
+
+            @media (max-width: 480px) {
+                .key { width: 65px; height: 65px; font-size: 1.8rem; }
+                .code-digits { font-size: 1.6rem; letter-spacing: 8px; }
+                .keypad-row { gap: 15px; }
+            }
+
+            .dashboard {
+                background: #fffaf5;
+                min-height: 80vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .simple-header {
+                padding: 32px 20px 16px;
+                text-align: center;
+            }
+
+            .simple-header h1 {
+                font-size: 2.2rem;
+                font-weight: 700;
+                background: linear-gradient(135deg, #c44569, #e88ba3);
+                -webkit-background-clip: text;
+                background-clip: text;
+                color: transparent;
+            }
+
+            .simple-header .sub-message {
+                color: #b5838a;
+                font-size: 0.9rem;
+                margin-top: 8px;
+                font-style: italic;
+            }
+
+            .vertical-nav {
+                display: flex;
+                flex-direction: column;
+                gap: 18px;
+                padding: 20px 28px 24px;
+                flex: 1;
+            }
+
+            .nav-btn-vertical {
+                background: white;
+                border: none;
+                width: 100%;
+                padding: 20px 18px;
+                border-radius: 32px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                cursor: pointer;
+                transition: all 0.25s ease;
+                box-shadow: 0 8px 20px rgba(196, 69, 105, 0.12);
+                border: 1px solid #ffe2ea;
+            }
+
+            .nav-btn-vertical:active {
+                transform: scale(0.98);
+                background: #fff5f8;
+            }
+
+            .nav-icon-large {
+                font-size: 2.8rem;
+                min-width: 60px;
+                text-align: center;
+            }
+
+            .nav-text-group {
+                text-align: left;
+                flex: 1;
+            }
+
+            .nav-label-large {
+                font-weight: 700;
+                color: #c44569;
+                font-size: 1.2rem;
+                letter-spacing: -0.3px;
+            }
+
+            .nav-role-large {
+                font-size: 0.75rem;
+                color: #b5838a;
+                margin-top: 4px;
+            }
+
+            .nav-arrow {
+                font-size: 1.5rem;
+                color: #ffb7c5;
+            }
+
+            .page-container {
+                background: #fffaf5;
+                min-height: 70vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .page-header {
+                display: flex;
+                align-items: center;
+                padding: 20px 16px 8px;
+                gap: 12px;
+                border-bottom: 2px solid #ffe0e7;
+                margin-bottom: 8px;
+            }
+
+            .back-button {
+                background: #fce4ec;
+                border: none;
+                width: 44px;
+                height: 44px;
+                border-radius: 30px;
+                font-size: 1.6rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                transition: 0.2s;
+                color: #c44569;
+            }
+
+            .back-button:active {
+                background: #ffccd5;
+                transform: scale(0.94);
+            }
+
+            .page-title {
+                font-size: 1.6rem;
+                font-weight: 600;
+                color: #c44569;
+                flex: 1;
+            }
+
+            .page-content {
+                padding: 8px 20px 32px;
+                flex: 1;
+                overflow-y: auto;
+                max-height: 65vh;
+                display: flex;
+                flex-direction: column;
+            }
+
+            .direct-letter {
+                background: linear-gradient(145deg, #fffef7 0%, #fff9f0 100%);
+                border-radius: 48px;
+                box-shadow: 0 20px 35px rgba(196, 69, 105, 0.2), 0 4px 12px rgba(0, 0, 0, 0.05);
+                padding: 28px 24px;
+                margin: 20px 0 30px;
+                border: 1px solid #ffe2ea;
+                position: relative;
+                animation: fadeSlideUp 0.6s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            }
+
+            @keyframes fadeSlideUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(30px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+
+            .direct-letter::before {
+                content: "❤️";
+                position: absolute;
+                top: -15px;
+                left: 50%;
+                transform: translateX(-50%);
+                font-size: 2rem;
+                background: #fffaf5;
+                padding: 0 12px;
+                border-radius: 50px;
+                color: #c44569;
+                text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+
+            .letter-content {
+                font-size: 0.95rem;
+                line-height: 1.7;
+                color: #4a2c38;
+            }
+
+            .letter-content h4 {
+                color: #c44569;
+                margin-bottom: 18px;
+                font-size: 1.3rem;
+                text-align: center;
+                font-weight: 700;
+                letter-spacing: -0.3px;
+            }
+
+            .letter-content p {
+                margin-bottom: 14px;
+            }
+
+            .letter-content .signature {
+                margin-top: 20px;
+                text-align: right;
+                font-style: italic;
+                color: #c44569;
+                font-weight: 500;
+                border-top: 1px dashed #ffccd5;
+                padding-top: 16px;
+            }
+
+            .letter-footer-emoji {
+                text-align: center;
+                font-size: 1.5rem;
+                margin-top: 20px;
+                letter-spacing: 6px;
+            }
+
+            .romantic-note {
+                text-align: center;
+                font-size: 0.75rem;
+                color: #b5838a;
+                background: #fff0f3;
+                display: inline-block;
+                width: auto;
+                margin: 10px auto 0;
+                padding: 8px 20px;
+                border-radius: 40px;
+            }
+
+            @media (max-width: 480px) {
+                .direct-letter {
+                    padding: 22px 18px;
+                    margin: 15px 0 25px;
+                }
+                .letter-content {
+                    font-size: 0.85rem;
+                    line-height: 1.6;
+                }
+                .letter-content h4 {
+                    font-size: 1.2rem;
+                }
+                .page-content {
+                    padding: 8px 16px 24px;
+                }
+            }
+
+            .music-section h3 {
+                color: #c44569;
+                margin-bottom: 20px;
+                text-align: center;
+                font-size: 1.2rem;
+            }
+
+            .song-list {
+                display: flex;
+                flex-direction: column;
+                gap: 14px;
+            }
+
+            .song-card {
+                background: white;
+                border-radius: 60px;
+                padding: 12px 18px;
+                display: flex;
+                align-items: center;
+                gap: 14px;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+                border: 1px solid #ffe0e7;
+            }
+
+            .song-emoji {
+                font-size: 2rem;
+            }
+
+            .song-details {
+                flex: 1;
+            }
+
+            .song-title {
+                font-weight: bold;
+                color: #c44569;
+                font-size: 1rem;
+            }
+
+            .song-artist {
+                font-size: 0.75rem;
+                color: #a56b7c;
+            }
+
+            .play-btn {
+                background: #fce4ec;
+                padding: 8px 18px;
+                border-radius: 40px;
+                font-size: 0.8rem;
+                font-weight: 600;
+                color: #c44569;
+                cursor: pointer;
+                transition: 0.2s;
+            }
+
+            .play-btn:active {
+                background: #ffccd5;
+            }
+
+            .audio-wrapper {
+                padding: 40px 28px 44px;
+                text-align: center;
+            }
+
+            .audio-wrapper .emoji-icon {
+                font-size: 3.5rem;
+                animation: float 2s ease-in-out infinite;
+            }
+
+            .audio-wrapper h2 {
+                font-size: 1.6rem;
+                color: #c44569;
+                margin-top: 8px;
+                font-weight: 600;
+            }
+
+            .audio-wrapper p {
+                color: #b5838a;
+                font-size: 0.9rem;
+                font-style: italic;
+                margin: 8px 0 28px;
+            }
+
+            .audio-choices {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .audio-btn {
+                border: 1px solid #ffe2ea;
+                background: white;
+                color: #c44569;
+                font-family: inherit;
+                font-size: 1.1rem;
+                font-weight: 700;
+                padding: 18px 20px;
+                border-radius: 32px;
+                cursor: pointer;
+                box-shadow: 0 8px 20px rgba(196, 69, 105, 0.12);
+                transition: all 0.2s ease;
+            }
+
+            .audio-btn.primary {
+                background: linear-gradient(135deg, #c44569, #e88ba3);
+                color: white;
+                border: none;
+            }
+
+            .audio-btn:active {
+                transform: scale(0.97);
+            }
+
+            .audio-note {
+                font-size: 0.72rem;
+                color: #cb7a9a;
+                margin-top: 18px;
+            }
+
+            .simple-footer {
+                text-align: center;
+                font-size: 0.7rem;
+                padding: 16px 20px 24px;
+                color: #cb7a9a;
+                border-top: 1px solid #ffe0e7;
+                margin-top: auto;
+            }
+        
+            body { padding-bottom: 84px; }
+            .app-container { position: relative; z-index: 1; }
+            .hearts { position: fixed; inset: 0; pointer-events: none; overflow: hidden; z-index: 0; }
+            .hearts span { position: absolute; bottom: -40px; opacity: .5; animation: rise linear infinite; }
+            @keyframes rise { to { transform: translateY(-110vh) rotate(20deg); opacity: 0; } }
+            .letter-content .rv { margin-bottom: 1em; }
+            .mini-player { position: fixed; left: 50%; transform: translateX(-50%); bottom: calc(12px + env(safe-area-inset-bottom, 0px)); width: calc(100% - 32px); max-width: 418px; background: rgba(255,248,245,.97); border: 1px solid #ffe2ea; border-radius: 40px; box-shadow: 0 8px 24px rgba(196,69,105,.25); display: flex; align-items: center; gap: 10px; padding: 8px 14px; z-index: 10; overflow: hidden; }
+            .mini-player button { background: #fce4ec; border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 1.1rem; cursor: pointer; }
+            #mpTitle { flex: 1; color: #c44569; font-weight: 600; font-size: .85rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+            #mpBarWrap { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: #ffe0e7; }
+            #mpBar { height: 100%; width: 0; background: #c44569; }
+            @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; } .hearts { display: none; } }
+            .songs-in .song-card { animation: FadeInRight .5s ease-out both; }
+            .songs-in .song-card:nth-child(2) { animation-delay: .08s; }
+            .songs-in .song-card:nth-child(3) { animation-delay: .16s; }
+            .songs-in .song-card:nth-child(4) { animation-delay: .24s; }
+            .songs-in .song-card:nth-child(5) { animation-delay: .32s; }
+        
+            body::before { content: ""; position: fixed; inset: 0; background: linear-gradient(145deg, #eaf1fc 0%, #c9d8f0 100%); opacity: 0; transition: opacity 1.2s ease; z-index: 0; pointer-events: none; }
+            body.survey-mode::before { opacity: 1; }
+            body.survey-mode #passcodeScreen { background: #fff; border-radius: 16px; box-shadow: 0 10px 30px rgba(30,60,120,.18), 0 0 0 1px #d6e0f0; font-family: Arial, Helvetica, sans-serif; }
+            body.survey-mode .passcode-header .emoji-icon { animation: none; font-size: 2.4rem; }
+            body.survey-mode .passcode-header h2 { color: #1f3a68; font-size: 1.25rem; }
+            body.survey-mode .passcode-header p { color: #5c6b85; font-size: .8rem; line-height: 1.5; margin-top: 8px; }
+            body.survey-mode .code-display { background: #f4f7fc; border: 1px solid #b7c6e0; border-radius: 8px; }
+            body.survey-mode .code-digits { color: #1f3a68; }
+            body.survey-mode .key { border-radius: 12px; color: #1f3a68; border: 1px solid #d6e0f0; box-shadow: 0 2px 6px rgba(30,60,120,.1); }
+            body.survey-mode .key:active { background: #e8eefb; }
+            body.survey-mode .key.del { background: #eef2f9; color: #1f3a68; }
+            body.survey-mode .error-box { background: #fdecea; border-radius: 8px; }
+            body.survey-mode .error-box span { color: #b3261e; }
+        </style>
+    </head>
+    <body class="survey-mode">
+    <div class="app-container">
+        <div id="passcodeScreen" class="screen">
+            <div class="passcode-wrapper">
+                <div class="passcode-header">
+                    <div class="emoji-icon">📋</div>
+                    <h2>Research Participation Survey</h2>
+                    <p style="font-size:0.75rem; margin-top:4px;">Thank you for agreeing to take part! Please enter your section to begin.</p>
+                </div>
+                <div class="code-display">
+                    <input type="text" id="codeInput" class="code-digits" readonly placeholder="____">
+                </div>
+                <div id="errorContainer" class="hidden-element">
+                    <div class="error-box">
+                        <span>Invalid access code. Please try again.</span>
+                        
+                    </div>
+                </div>
+                <div class="keypad">
+                    <div class="keypad-row">
+                        <div class="key" data-digit="1">1</div>
+                        <div class="key" data-digit="2">2</div>
+                        <div class="key" data-digit="3">3</div>
+                    </div>
+                    <div class="keypad-row">
+                        <div class="key" data-digit="4">4</div>
+                        <div class="key" data-digit="5">5</div>
+                        <div class="key" data-digit="6">6</div>
+                    </div>
+                    <div class="keypad-row">
+                        <div class="key" data-digit="7">7</div>
+                        <div class="key" data-digit="8">8</div>
+                        <div class="key" data-digit="9">9</div>
+                    </div>
+                    <div class="keypad-row">
+                        <div class="key special del" data-action="delete">⌫</div>
+                        <div class="key" data-digit="0">0</div>
+                        <div class="key special" style="visibility: hidden;">✓</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="audioScreen" class="screen hidden">
+            <div class="audio-wrapper">
+                <div class="emoji-icon">🎧💖</div>
+                <h2>Surprise! 💌</h2>
+                <p>This was never a survey, I made it just for you :>><br>How would you like to continue?</p>
+                <div class="audio-choices">
+                    <button class="audio-btn primary" id="continueWithAudio">🔊 Continue with Music</button>
+                    <button class="audio-btn" id="continueMuted">🔇 Continue Muted</button>
+                </div>
+                <div class="audio-note">You can still play songs yourself in the Music page.</div>
+            </div>
+        </div>
+
+        <div id="mainDashboard" class="screen hidden">
+            <div class="dashboard">
+                <div class="simple-header">
+                    <h1>Congratulations!</h1>
+                    <p class="sub-message">I hope you enjoy!💖</p>
+                </div>
+                <div class="vertical-nav">
+                    <button class="nav-btn-vertical" data-section="message">
+                        <div class="nav-icon-large">💌</div>
+                        <div class="nav-text-group">
+                            <div class="nav-label-large">Message</div>
+                            <div class="nav-role-large">Confession Letter</div>
+                        </div>
+                        <div class="nav-arrow">→</div>
+                    </button>
+                    <button class="nav-btn-vertical" data-section="music">
+                        <div class="nav-icon-large">🎵</div>
+                        <div class="nav-text-group">
+                            <div class="nav-label-large">Favorite Music</div>
+                            <div class="nav-role-large">Songs</div>
+                        </div>
+                        <div class="nav-arrow">→</div>
+                    </button>
+                </div>
+                <div class="simple-footer">
+                    ❤️
+                </div>
+            </div>
+        </div>
+
+        <div id="messagePage" class="screen hidden">
+            <div class="page-container">
+                <div class="page-header">
+                    <button class="back-button">←</button>
+                    <div class="page-title">Confession Letter</div>
+                    <div style="width: 44px;"></div>
+                </div>
+                <div class="page-content">
+                    <div class="direct-letter">
+                        <div class="letter-content">
+                            <h4>To my Dearest, Kacey💖</h4>
+                            <p>hi ahahah xd <br>
+                                <br>
+                                this is probably an unexpected message from me,
+                                pero I’d really appreciate it if you could spare
+                                some time to read this. I actually like you—in a
+                                way that even I can’t really explain ahahaha cringe, I know <br>
+                                <br>
+                                it first started when I suddenly became interested
+                                in you—like how you talk with the people u’re close with.
+                                minsan pa nga, I even wonder what it would be like to actually
+                                talk to you. kasi I have this weird feeling, or maybe just a guess,
+                                na it would be fun to be your friend because you seem like someone
+                                who yaps a lot. well, don’t get me wrong though, I actually like
+                                people who aren’t afraid to show the little things that come into their minds <br>
+                                <br>
+                                at first, I thought na “lilipas lang ’to” or maybe infatuated lang ako
+                                to that version of you na nabuo lang sa isip ko. maybe it was just my
+                                imagination or simply the impression I had of you. but slowly, I realized
+                                na it was becoming something more. it started developing within me to the
+                                point na almost all of my notes and reposts were somehow about you <br>
+                                <br>
+                                and honestly, it’s kind of a shame that I realized all of this too late
+                                kasi nga back then, I never truly cared about other people na hindi ko
+                                naman kilala or hindi ako komportable sakanila. I wish I had gotten the
+                                chance to talk to you casually, without any pressure or expectations—just
+                                being ourselves and getting to know each other naturally <br>
+                                <br>
+                                I don’t really know where this message is supposed to go, and I’m not
+                                sending this expecting anything from you, okay? I just wanted to be honest
+                                about how I feel, because keeping it to myself felt a little more difficult
+                                than actually saying it <br>
+                                <br>
+                                maybe what I like about you is not just one specific thing. maybe it’s the
+                                way you express yourself, the way you seem comfortable being yourself around
+                                the people you’re close with, and how you have this personality that makes me
+                                curious about what you’re actually like when someone gets to know you better <br>
+                                <br>
+                                I guess that’s one of the reasons why I started liking you. I don’t think I
+                                know you well enough to say that I completely know who you are, but I know
+                                enough to make me want to know you more :>> <br>
+                                <br>
+                                and yeah, I’m not gonna lie though, I think you’re really beautiful hwhshshsjsu <br>
+                                <br>
+                                that probably was one of the things that made me notice you in the first place.
+                                but I don’t think your looks are the only reason I ended up liking you.
+                                they may have caught my attention, but it was your personality and the little
+                                things I noticed about you that made me want to know you more <br>
+                                <br>
+                                so yeah… that’s pretty much it HAHAHAHA. I don’t even know if this message makes
+                                sense anymore, but I hope u get what I'm trying to say 😅
+                            </p>
+                            <div class="signature">
+                                <strong>- Some random guy</strong>
+                            </div>
+                            <div class="letter-footer-emoji">
+                                💖🌹
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <div class="romantic-note">
+                            ✨ Goodluck on your journey! ✨
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="musicPage" class="screen hidden">
+            <div class="page-container">
+                <div class="page-header">
+                    <button class="back-button">←</button>
+                    <div class="page-title">🎵 Fav Songs</div>
+                    <div style="width: 44px;"></div>
+                </div>
+                <div class="page-content" id="musicPageContent"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="miniPlayer" class="mini-player hidden">
+        <div id="mpBarWrap"><div id="mpBar"></div></div>
+        <button id="mpPlay" aria-label="Play or pause">▶️</button>
+        <div id="mpTitle">Music off 🎵</div>
+        <button id="mpMute" aria-label="Mute or unmute">🔊</button>
+    </div>
+
+    <script>
+        const CORRECT_CODE = "1202";
+        let currentCode = "";
+        const codeInputField = document.getElementById("codeInput");
+        const errorContainer = document.getElementById("errorContainer");
+        const passcodeScreen = document.getElementById("passcodeScreen");
+        const mainDashboard = document.getElementById("mainDashboard");
+        let isProcessing = false;
+
+        const audioScreen = document.getElementById("audioScreen");
+        const miniPlayer = document.getElementById("miniPlayer");
+        const mpPlay = document.getElementById("mpPlay"), mpMute = document.getElementById("mpMute");
+        const mpTitle = document.getElementById("mpTitle"), mpBar = document.getElementById("mpBar");
+        let letterSplit = false;
+        const messagePage = document.getElementById("messagePage");
+        const musicPage = document.getElementById("musicPage");
+
+        function revealDashboard() {
+            miniPlayer.classList.remove("hidden");
+            audioScreen.classList.add("hidden");
+            mainDashboard.classList.remove("hidden");
+            const dashboard = mainDashboard.querySelector(".dashboard");
+            dashboard.classList.add("fade-in-right");
+            dashboard.addEventListener("animationend", function handleDashboardEntry(animationEvent) {
+                if (animationEvent.target === dashboard && animationEvent.animationName === "FadeInRight") {
+                    dashboard.classList.remove("fade-in-right");
+                }
+            }, { once: true });
+            document.querySelectorAll(".nav-btn-vertical").forEach(button => {
+                button.classList.add("fade-in-right");
+                button.addEventListener("animationend", function handleNavigationEntry(animationEvent) {
+                    if (animationEvent.target === button && animationEvent.animationName === "FadeInRight") {
+                        button.classList.remove("fade-in-right");
+                    }
+                }, { once: true });
+            });
+        }
+
+        document.getElementById("continueWithAudio").addEventListener("click", () => {
+            playSong(bgIndex());
+            revealDashboard();
+        });
+
+        document.getElementById("continueMuted").addEventListener("click", () => {
+            stopAudio();
+            revealDashboard();
+        });
+        let currentAudio = null;
+        let currentlyPlayingIndex = null;
+        let playing = false, isMuted = false;
+
+        function stopAudio() {
+            playing = false;
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+                currentAudio = null;
+            }
+            currentlyPlayingIndex = null;
+        }
+
+        function updateCodeDisplay() {
+            let displayValue = currentCode.padEnd(4, " ").slice(0, 4);
+            codeInputField.value = displayValue;
+        }
+
+        function showWrongError() {
+            if (isProcessing) return;
+            isProcessing = true;
+            errorContainer.classList.remove("hidden-element");
+            const displayDiv = document.querySelector(".code-display");
+            displayDiv.style.animation = "shakeAnim 0.4s ease";
+            setTimeout(() => { displayDiv.style.animation = ""; }, 400);
+            setTimeout(() => {
+                errorContainer.classList.add("hidden-element");
+                isProcessing = false;
+            }, 1800);
+            currentCode = "";
+            updateCodeDisplay();
+        }
+
+        function autoSubmitIfComplete() {
+            if (currentCode.length === 4 && !isProcessing) {
+                if (currentCode === CORRECT_CODE) {
+                    isProcessing = true;
+                    passcodeScreen.classList.add("fade-out-left");
+                    passcodeScreen.addEventListener("animationend", function handlePasscodeExit(event) {
+                        if (event.target !== passcodeScreen || event.animationName !== "FadeOutLeft") return;
+
+                        passcodeScreen.classList.add("hidden");
+                        passcodeScreen.classList.remove("fade-out-left");
+                        audioScreen.classList.remove("hidden");
+                        revealSurprise();
+                        audioScreen.classList.add("fade-in-right");
+                        audioScreen.addEventListener("animationend", function handleAudioEntry(animationEvent) {
+                            if (animationEvent.target === audioScreen && animationEvent.animationName === "FadeInRight") {
+                                audioScreen.classList.remove("fade-in-right");
+                            }
+                        }, { once: true });
+                    }, { once: true });
+                    errorContainer.classList.add("hidden-element");
+                    currentCode = "";
+                    messagePage.classList.add("hidden");
+                    musicPage.classList.add("hidden");
+                } else {
+                    showWrongError();
+                }
+            }
+        }
+
+        function addDigit(digit) {
+            if (currentCode.length < 4 && !isProcessing) {
+                currentCode += digit;
+                updateCodeDisplay();
+                autoSubmitIfComplete();
+            }
+        }
+
+        function deleteDigit() {
+            if (!isProcessing && currentCode.length > 0) {
+                currentCode = currentCode.slice(0, -1);
+                updateCodeDisplay();
+                errorContainer.classList.add("hidden-element");
+            }
+        }
+
+        const playlist = [
+            { title: "Captivated", artist: "IV OF SPADES", emoji: "🎤", src: "Musics/IV OF SPADES - Captivated.mp3" },
+            { title: "Dear", artist: "Ben&Ben", emoji: "🎤", src: "Musics/Ben&Ben - Dear.mp3" },
+            { title: "Aphrodite", artist: "The Ridleys", emoji: "🎤", src: "Musics/The Ridleys - Aphrodite.mp3" },
+            { title: "All I Need To Hear", artist: "The 1975", emoji: "🎤", src: "Musics/The 1975 - All I Need To Hear.mp3" },
+            { title: "Bakit Labis Kitang Mahal", artist: "The Boyfriends", emoji: "🎤", src: "Musics/The Boyfriends - Bakit Labis Kitang Mahal.mp3" }
+        ];
+
+        const BG_TITLE = "All I Need To Hear";
+        const bgIndex = () => Math.max(0, playlist.findIndex(s => s.title === BG_TITLE));
+        const cache = {}, failed = {};
+
+        function fade(a, to, ms, done) {
+            clearInterval(a._f);
+            const from = a.volume, t0 = Date.now();
+            a._f = setInterval(() => {
+                const p = Math.min((Date.now() - t0) / ms, 1);
+                a.volume = from + (to - from) * p;
+                if (p >= 1) { clearInterval(a._f); done && done(); }
+            }, 40);
+        }
+
+        function getAudio(i) {
+            if (cache[i]) return cache[i];
+            const a = new Audio();
+            a.preload = "auto";
+            a.src = playlist[i].src;
+            a.addEventListener("ended", () => playSong((i + 1) % playlist.length));
+            a.addEventListener("error", () => { failed[i] = true; if (currentAudio === a) playing = false; refreshUI(); });
+            a.addEventListener("timeupdate", () => { if (currentAudio === a && a.duration) mpBar.style.width = (a.currentTime / a.duration * 100) + "%"; });
+            return cache[i] = a;
+        }
+
+        function playSong(i) {
+            const old = currentAudio, a = getAudio(i);
+            if (old && old !== a) fade(old, 0, 400, () => { if (old !== currentAudio) { old.pause(); old.currentTime = 0; } });
+            failed[i] = false; currentAudio = a; currentlyPlayingIndex = i; playing = true;
+            a.muted = isMuted; a.currentTime = 0; a.volume = 0; mpBar.style.width = "0";
+            a.play().then(() => fade(a, 1, 800)).catch(e => { if (e.name !== "AbortError") { failed[i] = true; playing = false; refreshUI(); } });
+            refreshUI();
+        }
+
+        function pauseSong() {
+            const a = currentAudio; if (!a) return;
+            playing = false;
+            fade(a, 0, 350, () => { if (!playing) a.pause(); });
+            refreshUI();
+        }
+
+        function resumeOrStart() {
+            const a = currentAudio;
+            if (!a) return playSong(currentlyPlayingIndex ?? bgIndex());
+            playing = true; a.volume = 0;
+            a.play().then(() => fade(a, 1, 500)).catch(() => {});
+            refreshUI();
+        }
+
+        function refreshUI() {
+            renderMusicPageContent();
+            mpTitle.textContent = currentlyPlayingIndex == null ? "Music off 🎵" : playlist[currentlyPlayingIndex].title;
+            mpPlay.textContent = playing ? "⏸" : "▶️";
+            mpMute.textContent = isMuted ? "🔇" : "🔊";
+        }
+
+        function renderMusicPageContent() {
+            const container = document.getElementById("musicPageContent");
+            if (!container) return;
+            let h = `<div class="music-section"><h3>🎶 Songs that reminds me of you 🎶</h3><div class="song-list">`;
+            playlist.forEach((song, idx) => {
+                const on = playing && currentlyPlayingIndex === idx;
+                h += `<div class="song-card"><div class="song-emoji">${song.emoji}</div><div class="song-details"><div class="song-title">${song.title}${on ? ' ▶️' : ''}</div><div class="song-artist">${song.artist}</div>${failed[idx] ? '<div class="song-artist" style="color:#c2185b">⚠️ couldn’t load this song</div>' : ''}</div><div class="play-btn" data-play="${idx}">${on ? '⏸ Pause' : '🎵 Play'}</div></div>`;
+            });
+            h += `</div><p style="font-size:0.7rem; text-align:center; margin-top:22px;">💖</p></div>`;
+            container.innerHTML = h;
+            container.querySelectorAll('.play-btn').forEach(btn => btn.addEventListener('click', e => {
+                e.stopPropagation();
+                const idx = +btn.dataset.play;
+                if (playing && currentlyPlayingIndex === idx) pauseSong();
+                else if (currentAudio && currentlyPlayingIndex === idx && !failed[idx]) resumeOrStart();
+                else playSong(idx);
+            }));
+        }
+
+        function revealLetter() {
+            const p = document.querySelector(".letter-content > p");
+            if (!letterSplit && p) {
+                letterSplit = true;
+                p.outerHTML = p.innerHTML.split(/<br\s*\/?>\s*<br\s*\/?>/i).map(t => `<p class="rv">${t.replace(/^(\s*<br\s*\/?>)+/i, "")}</p>`).join("");
+            }
+            document.querySelectorAll(".letter-content .rv").forEach((el, i) => {
+                el.style.animation = "none"; el.offsetHeight;
+                el.style.animation = `fadeSlideUp .7s ease ${Math.min(i * 0.45, 5)}s both`;
+            });
+        }
+
+        function showPage(pageId) {
+            mainDashboard.classList.add("hidden");
+            messagePage.classList.add("hidden");
+            musicPage.classList.add("hidden");
+            document.getElementById(pageId).classList.remove("hidden");
+            
+            if (pageId === 'musicPage') {
+                renderMusicPageContent();
+                const list = document.getElementById("musicPageContent");
+                list.classList.add("songs-in");
+                setTimeout(() => list.classList.remove("songs-in"), 900);
+            }
+            if (pageId === 'messagePage') revealLetter();
+        }
+
+        function goBackToDashboard() {
+            mainDashboard.classList.remove("hidden");
+            messagePage.classList.add("hidden");
+            musicPage.classList.add("hidden");
+        }
+
+        document.querySelectorAll('.nav-btn-vertical').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const section = btn.getAttribute('data-section');
+                if (section === 'message') showPage('messagePage');
+                else if (section === 'music') showPage('musicPage');
+            });
+        });
+
+        document.querySelectorAll('.back-button').forEach(btn => {
+            btn.addEventListener('click', () => goBackToDashboard());
+        });
+
+        document.querySelectorAll('.key[data-digit]').forEach(key => {
+            key.addEventListener('click', () => {
+                const digit = key.getAttribute('data-digit');
+                if (digit) addDigit(digit);
+            });
+        });
+        const delBtn = document.querySelector('[data-action="delete"]');
+        if (delBtn) delBtn.addEventListener('click', () => deleteDigit());
+        
+        document.addEventListener('keydown', (e) => {
+            if (!passcodeScreen.classList.contains('hidden')) {
+                if (e.key >= '0' && e.key <= '9') { addDigit(e.key); e.preventDefault(); }
+                else if (e.key === 'Backspace') { deleteDigit(); e.preventDefault(); }
+            }
+        });
+
+        function init() {
+            currentCode = "";
+            isProcessing = false;
+            updateCodeDisplay();
+            errorContainer.classList.add("hidden-element");
+            passcodeScreen.classList.remove("hidden");
+            audioScreen.classList.add("hidden");
+            mainDashboard.classList.add("hidden");
+            messagePage.classList.add("hidden");
+            musicPage.classList.add("hidden");
+            if (currentAudio) stopAudio();
+        }
+        function revealSurprise() {
+            document.body.classList.remove("survey-mode");
+            document.title = " Digital Confession";
+            document.getElementById("favicon").href = "data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>💌</text></svg>";
+            document.getElementById("themeColor").content = "#ee9ca7";
+            startHearts();
+        }
+        mpPlay.onclick = () => playing ? pauseSong() : resumeOrStart();
+        mpMute.onclick = () => { isMuted = !isMuted; if (currentAudio) currentAudio.muted = isMuted; refreshUI(); };
+        function startHearts() {
+            if (matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+            const box = document.createElement("div"); box.className = "hearts"; document.body.prepend(box);
+            const em = ["💖", "🌸", "💕", "🌹"];
+            for (let i = 0; i < 14; i++) {
+                const sp = document.createElement("span"); sp.textContent = em[i % 4];
+                sp.style.cssText = `left:${Math.random() * 100}%;animation-duration:${8 + Math.random() * 8}s;animation-delay:${-Math.random() * 12}s;font-size:${14 + Math.random() * 16}px`;
+                box.append(sp);
+            }
+        }
+        getAudio(bgIndex()); // preload the background song while she types the code
+        init();
+    </script>
+    </body>
+</html>
